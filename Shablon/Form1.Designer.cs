@@ -37,11 +37,13 @@
             btnChooseTemplate = new Button();
             lblTemplate = new Label();
             label1 = new Label();
+            btnLoadSettings = new Button();
+            btnSaveSettings = new Button();
             SuspendLayout();
             // 
             // btnLoadData
             // 
-            btnLoadData.Location = new Point(36, 42);
+            btnLoadData.Location = new Point(28, 101);
             btnLoadData.Name = "btnLoadData";
             btnLoadData.Size = new Size(187, 34);
             btnLoadData.TabIndex = 0;
@@ -52,7 +54,7 @@
             // btnChooseResultFolder
             // 
             btnChooseResultFolder.Enabled = false;
-            btnChooseResultFolder.Location = new Point(36, 79);
+            btnChooseResultFolder.Location = new Point(28, 137);
             btnChooseResultFolder.Name = "btnChooseResultFolder";
             btnChooseResultFolder.Size = new Size(187, 34);
             btnChooseResultFolder.TabIndex = 2;
@@ -63,7 +65,7 @@
             // lblResult
             // 
             lblResult.AutoSize = true;
-            lblResult.Location = new Point(229, 89);
+            lblResult.Location = new Point(221, 147);
             lblResult.Name = "lblResult";
             lblResult.Size = new Size(107, 15);
             lblResult.TabIndex = 4;
@@ -72,16 +74,16 @@
             // lblDataElement
             // 
             lblDataElement.AutoSize = true;
-            lblDataElement.Location = new Point(229, 52);
+            lblDataElement.Location = new Point(221, 111);
             lblDataElement.Name = "lblDataElement";
-            lblDataElement.Size = new Size(124, 15);
+            lblDataElement.Size = new Size(92, 15);
             lblDataElement.TabIndex = 5;
-            lblDataElement.Text = "Загружено объектов:";
+            lblDataElement.Text = "Путь к данным:";
             // 
             // btnFillTemplate
             // 
             btnFillTemplate.Enabled = false;
-            btnFillTemplate.Location = new Point(36, 153);
+            btnFillTemplate.Location = new Point(28, 209);
             btnFillTemplate.Name = "btnFillTemplate";
             btnFillTemplate.Size = new Size(187, 34);
             btnFillTemplate.TabIndex = 6;
@@ -92,7 +94,7 @@
             // lblResultData
             // 
             lblResultData.AutoSize = true;
-            lblResultData.Location = new Point(229, 163);
+            lblResultData.Location = new Point(221, 219);
             lblResultData.Name = "lblResultData";
             lblResultData.Size = new Size(132, 15);
             lblResultData.TabIndex = 7;
@@ -101,7 +103,7 @@
             // btnChooseTemplate
             // 
             btnChooseTemplate.Enabled = false;
-            btnChooseTemplate.Location = new Point(36, 116);
+            btnChooseTemplate.Location = new Point(28, 173);
             btnChooseTemplate.Name = "btnChooseTemplate";
             btnChooseTemplate.Size = new Size(187, 34);
             btnChooseTemplate.TabIndex = 8;
@@ -112,7 +114,7 @@
             // lblTemplate
             // 
             lblTemplate.AutoSize = true;
-            lblTemplate.Location = new Point(229, 126);
+            lblTemplate.Location = new Point(221, 183);
             lblTemplate.Name = "lblTemplate";
             lblTemplate.Size = new Size(101, 15);
             lblTemplate.TabIndex = 9;
@@ -127,11 +129,33 @@
             label1.TabIndex = 10;
             label1.Text = "*загружать данные2.xlsx";
             // 
+            // btnLoadSettings
+            // 
+            btnLoadSettings.Location = new Point(28, 29);
+            btnLoadSettings.Name = "btnLoadSettings";
+            btnLoadSettings.Size = new Size(187, 34);
+            btnLoadSettings.TabIndex = 11;
+            btnLoadSettings.Text = "Загрузить настройки";
+            btnLoadSettings.UseVisualStyleBackColor = true;
+            btnLoadSettings.Click += btnLoadSettings_Click;
+            // 
+            // btnSaveSettings
+            // 
+            btnSaveSettings.Location = new Point(28, 65);
+            btnSaveSettings.Name = "btnSaveSettings";
+            btnSaveSettings.Size = new Size(187, 34);
+            btnSaveSettings.TabIndex = 12;
+            btnSaveSettings.Text = "Сохранить настройки";
+            btnSaveSettings.UseVisualStyleBackColor = true;
+            btnSaveSettings.Click += btnSaveSettings_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(799, 292);
+            Controls.Add(btnSaveSettings);
+            Controls.Add(btnLoadSettings);
             Controls.Add(label1);
             Controls.Add(lblTemplate);
             Controls.Add(btnChooseTemplate);
@@ -158,5 +182,7 @@
         private Button btnChooseTemplate;
         private Label lblTemplate;
         private Label label1;
+        private Button btnLoadSettings;
+        private Button btnSaveSettings;
     }
 }
