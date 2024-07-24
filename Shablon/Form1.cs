@@ -18,7 +18,7 @@ namespace Shablon
             InitializeComponent();
         }
         //загрузить исходные данные
-        private void button1_Click(object sender, System.EventArgs e)
+        private void btnLoadData_Click(object sender, System.EventArgs e)
         {
             Excel.Sheets objSheets;
             Excel._Worksheet objSheet;
@@ -197,7 +197,7 @@ namespace Shablon
         }
 
         //Выбрать папку для результа
-        private void button3_Click(object sender, EventArgs e)
+        private void btnChooseResultFolder_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
@@ -208,14 +208,19 @@ namespace Shablon
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnChooseTemplate_Click(object sender, EventArgs e)
         {
             templatepath = GetFileFromDialog("word files (*.docx)|*.docx;");
             lblTemplate.Text = lblTemplate.Text + " " + templatepath;
         }
+
+        private void btnFillTemplate_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
-    
-    
+
+
 }
 

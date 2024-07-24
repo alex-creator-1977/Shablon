@@ -28,35 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
-            button3 = new Button();
+            btnLoadData = new Button();
+            btnChooseResultFolder = new Button();
             lblResult = new Label();
             lblDataElement = new Label();
-            button2 = new Button();
+            btnFillTemplate = new Button();
             lblResultData = new Label();
-            button4 = new Button();
+            btnChooseTemplate = new Button();
             lblTemplate = new Label();
             SuspendLayout();
             // 
-            // button1
+            // btnLoadData
             // 
-            button1.Location = new Point(36, 42);
-            button1.Name = "button1";
-            button1.Size = new Size(187, 34);
-            button1.TabIndex = 0;
-            button1.Text = "Загрузить данные";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            btnLoadData.Location = new Point(36, 42);
+            btnLoadData.Name = "btnLoadData";
+            btnLoadData.Size = new Size(187, 34);
+            btnLoadData.TabIndex = 0;
+            btnLoadData.Text = "Загрузить данные";
+            btnLoadData.UseVisualStyleBackColor = true;
+            btnLoadData.Click += btnLoadData_Click;
             // 
-            // button3
+            // btnChooseResultFolder
             // 
-            button3.Location = new Point(36, 79);
-            button3.Name = "button3";
-            button3.Size = new Size(187, 34);
-            button3.TabIndex = 2;
-            button3.Text = "Вабрать папку для результата";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            btnChooseResultFolder.Location = new Point(36, 79);
+            btnChooseResultFolder.Name = "btnChooseResultFolder";
+            btnChooseResultFolder.Size = new Size(187, 34);
+            btnChooseResultFolder.TabIndex = 2;
+            btnChooseResultFolder.Text = "Вабрать папку для результата";
+            btnChooseResultFolder.UseVisualStyleBackColor = true;
+            btnChooseResultFolder.Click += btnChooseResultFolder_Click;
             // 
             // lblResult
             // 
@@ -76,14 +76,15 @@
             lblDataElement.TabIndex = 5;
             lblDataElement.Text = "Загружено объектов:";
             // 
-            // button2
+            // btnFillTemplate
             // 
-            button2.Location = new Point(36, 153);
-            button2.Name = "button2";
-            button2.Size = new Size(187, 34);
-            button2.TabIndex = 6;
-            button2.Text = "Заполнить шаблон (ы)";
-            button2.UseVisualStyleBackColor = true;
+            btnFillTemplate.Location = new Point(36, 153);
+            btnFillTemplate.Name = "btnFillTemplate";
+            btnFillTemplate.Size = new Size(187, 34);
+            btnFillTemplate.TabIndex = 6;
+            btnFillTemplate.Text = "Заполнить шаблон (ы)";
+            btnFillTemplate.UseVisualStyleBackColor = true;
+            btnFillTemplate.Click += btnFillTemplate_Click;
             // 
             // lblResultData
             // 
@@ -94,15 +95,15 @@
             lblResultData.TabIndex = 7;
             lblResultData.Text = "Заполнено шаблонов:";
             // 
-            // button4
+            // btnChooseTemplate
             // 
-            button4.Location = new Point(36, 116);
-            button4.Name = "button4";
-            button4.Size = new Size(187, 34);
-            button4.TabIndex = 8;
-            button4.Text = "Выбрть шаблон";
-            button4.UseVisualStyleBackColor = true;
-            button4.Click += button4_Click;
+            btnChooseTemplate.Location = new Point(36, 116);
+            btnChooseTemplate.Name = "btnChooseTemplate";
+            btnChooseTemplate.Size = new Size(187, 34);
+            btnChooseTemplate.TabIndex = 8;
+            btnChooseTemplate.Text = "Выбрть шаблон";
+            btnChooseTemplate.UseVisualStyleBackColor = true;
+            btnChooseTemplate.Click += btnChooseTemplate_Click;
             // 
             // lblTemplate
             // 
@@ -119,13 +120,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(458, 210);
             Controls.Add(lblTemplate);
-            Controls.Add(button4);
+            Controls.Add(btnChooseTemplate);
             Controls.Add(lblResultData);
-            Controls.Add(button2);
+            Controls.Add(btnFillTemplate);
             Controls.Add(lblDataElement);
             Controls.Add(lblResult);
-            Controls.Add(button3);
-            Controls.Add(button1);
+            Controls.Add(btnChooseResultFolder);
+            Controls.Add(btnLoadData);
             Name = "Form1";
             Text = "Заполнить данные";
             ResumeLayout(false);
@@ -134,13 +135,13 @@
 
         #endregion
 
-        private Button button1;
-        private Button button3;
+        private Button btnLoadData;
+        private Button btnChooseResultFolder;
         private Label lblResult;
         private Label lblDataElement;
-        private Button button2;
+        private Button btnFillTemplate;
         private Label lblResultData;
-        private Button button4;
+        private Button btnChooseTemplate;
         private Label lblTemplate;
     }
 }
