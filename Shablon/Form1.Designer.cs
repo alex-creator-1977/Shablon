@@ -36,6 +36,7 @@
             lblResultData = new Label();
             btnChooseTemplate = new Button();
             lblTemplate = new Label();
+            label1 = new Label();
             SuspendLayout();
             // 
             // btnLoadData
@@ -50,6 +51,7 @@
             // 
             // btnChooseResultFolder
             // 
+            btnChooseResultFolder.Enabled = false;
             btnChooseResultFolder.Location = new Point(36, 79);
             btnChooseResultFolder.Name = "btnChooseResultFolder";
             btnChooseResultFolder.Size = new Size(187, 34);
@@ -78,6 +80,7 @@
             // 
             // btnFillTemplate
             // 
+            btnFillTemplate.Enabled = false;
             btnFillTemplate.Location = new Point(36, 153);
             btnFillTemplate.Name = "btnFillTemplate";
             btnFillTemplate.Size = new Size(187, 34);
@@ -97,11 +100,12 @@
             // 
             // btnChooseTemplate
             // 
+            btnChooseTemplate.Enabled = false;
             btnChooseTemplate.Location = new Point(36, 116);
             btnChooseTemplate.Name = "btnChooseTemplate";
             btnChooseTemplate.Size = new Size(187, 34);
             btnChooseTemplate.TabIndex = 8;
-            btnChooseTemplate.Text = "Выбрть шаблон";
+            btnChooseTemplate.Text = "Выбрaть шаблон";
             btnChooseTemplate.UseVisualStyleBackColor = true;
             btnChooseTemplate.Click += btnChooseTemplate_Click;
             // 
@@ -110,15 +114,25 @@
             lblTemplate.AutoSize = true;
             lblTemplate.Location = new Point(229, 126);
             lblTemplate.Name = "lblTemplate";
-            lblTemplate.Size = new Size(98, 15);
+            lblTemplate.Size = new Size(101, 15);
             lblTemplate.TabIndex = 9;
-            lblTemplate.Text = "Вабран шаблон:";
+            lblTemplate.Text = "Выбран шаблон:";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(229, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(140, 15);
+            label1.TabIndex = 10;
+            label1.Text = "*загружать данные2.xlsx";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(458, 210);
+            ClientSize = new Size(799, 292);
+            Controls.Add(label1);
             Controls.Add(lblTemplate);
             Controls.Add(btnChooseTemplate);
             Controls.Add(lblResultData);
@@ -143,5 +157,6 @@
         private Label lblResultData;
         private Button btnChooseTemplate;
         private Label lblTemplate;
+        private Label label1;
     }
 }

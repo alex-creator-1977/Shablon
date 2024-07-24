@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shablon
 {
-    internal static class DataFields
+    internal   class DataFields
     {
 
         public const string nr = "nr";
@@ -17,5 +17,6 @@ namespace Shablon
         public const string variable_datepr = "variable_datepr";
         public const string variable_year1 = "variable_year1";
 
+       
     }
 }

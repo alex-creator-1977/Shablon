@@ -1,6 +1,12 @@
-﻿using System.Reflection;
+﻿
+using Microsoft.Office.Interop.Word;
+using System.Diagnostics;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Excel = Microsoft.Office.Interop.Excel;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace Shablon
 {
@@ -8,11 +14,11 @@ namespace Shablon
     public partial class Form1 : Form
     {
         string? resultpath = null;
-        string? templatepath = null;
+        string? templatefile = null;
 
         Excel.Application objApp;
         Excel._Workbook objBook;
-
+        List<DataElement>? DataList = null;
         public Form1()
         {
             InitializeComponent();
@@ -25,15 +31,15 @@ namespace Shablon
             Excel.Range range;
             Excel.Workbooks objBooks;
 
-            var DataList = new List<DataElement>();
+            DataList = new List<DataElement>();
 
             try
             {
                 // Instantiate Excel and start a new workbook.
                 objApp = new Excel.Application();
 
-                // string filePath = GetFileFromDialog();
-                string filePath = "C:\\Users\\Besitzer\\source\\repos\\Shablon\\Shablon\\данные2.xlsx";
+                string filePath = GetFileFromDialog();
+                // string filePath = "C:\\Users\\Besitzer\\source\\repos\\Shablon\\Shablon\\данные2.xlsx";
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     try
@@ -158,6 +164,10 @@ namespace Shablon
                     }
                     lblDataElement.Text = lblDataElement.Text + " " + DataList.Count;
                     MessageBox.Show(lblDataElement.Text);
+
+
+                    btnLoadData.Enabled = false;
+                    btnChooseResultFolder.Enabled = true;
                 }
             }
 
@@ -171,6 +181,13 @@ namespace Shablon
 
                 MessageBox.Show(errorMessage, "Error");
             }
+            finally
+            {
+                if (objBook != null)
+                {
+                    objBook.Close();
+                }
+            }
         }
 
 
@@ -178,49 +195,152 @@ namespace Shablon
         private string GetFileFromDialog(string sMask = "excel files (*.xlsx)|*.xlsx;")
         {
             string filePath = string.Empty;
-
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            try
             {
-                openFileDialog.InitialDirectory = "c:\\";
-                openFileDialog.Filter = sMask; /*"excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";*/
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                using (OpenFileDialog openFileDialog = new OpenFileDialog())
                 {
-                    //Get the path of specified file
-                    filePath = openFileDialog.FileName;
+                    openFileDialog.InitialDirectory = "c:\\";
+                    openFileDialog.Filter = sMask; /*"excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";*/
+                    openFileDialog.FilterIndex = 2;
+                    openFileDialog.RestoreDirectory = true;
 
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        //Get the path of specified file
+                        filePath = openFileDialog.FileName;
+
+                    }
                 }
             }
+            catch (Exception theException)
+            {
+                MessageBox.Show(theException.Message);
+            }
+
             return filePath;
         }
 
         //Выбрать папку для результа
         private void btnChooseResultFolder_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
-
-            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            try
             {
-                resultpath = folderBrowserDialog1.SelectedPath;
-                lblResult.Text = resultpath;
+                using (FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog())
+                {
+                    if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        resultpath = folderBrowserDialog1.SelectedPath;
+                        lblResult.Text = lblResult.Text + " " + resultpath;
+                        btnChooseResultFolder.Enabled = false;
+                        btnChooseTemplate.Enabled = true;
+                    }
+                }
             }
+            catch (Exception theException)
+            {
+                MessageBox.Show(theException.Message);
+            }
+
         }
 
         private void btnChooseTemplate_Click(object sender, EventArgs e)
         {
-            templatepath = GetFileFromDialog("word files (*.docx)|*.docx;");
-            lblTemplate.Text = lblTemplate.Text + " " + templatepath;
+            templatefile = GetFileFromDialog("word files (*.docx)|*.docx;");
+            if (templatefile != string.Empty)
+            {
+                lblTemplate.Text = lblTemplate.Text + " " + templatefile;
+                btnChooseTemplate.Enabled = false;
+                btnFillTemplate.Enabled = true;
+            }
+
         }
 
         private void btnFillTemplate_Click(object sender, EventArgs e)
         {
+            Word._Application? oWord = null;
+            Word.Document? oDoc = null;
+            try
+            {
+                oWord = new Word.Application();
+                oDoc = oWord.Documents.Add(templatefile);
+
+                int iCount = 0;
+                if (!String.IsNullOrEmpty(templatefile))
+                {
+                    if (DataList != null)
+                    {
+                        foreach (DataElement element in DataList)
+                        {
+
+                            // Debug.WriteLine(oDoc.ContentControls.Count); 
+                            foreach (ContentControl item in oDoc.ContentControls)
+                            {
+
+                                // ContentControls controls = oDoc.SelectContentControlsByTitle(item.Tag);
+                                ContentControls controls = oDoc.SelectContentControlsByTag(item.Tag);
+                                ContentControl control = controls[1];
+                                //  control.Range.Text = "тест";
+
+                                //Debug.WriteLine(item.Tag);
+                                switch (item.Tag)
+                                {
+
+                                    case DataFields.variable_bt:
+                                        control.Range.Text = element.Variable_bt;
+
+                                        break;
+                                    case DataFields.variable_sn:
+                                        control.Range.Text = element.Variable_sn;
+                                        break;
+                                    case DataFields.variable_year2:
+                                        control.Range.Text = element.Variable_year2;
+                                        break;
+                                    case DataFields.variable_fio:
+                                        control.Range.Text = element.Variable_fio;
+                                        break;
+                                    case DataFields.variable_datepr:
+                                        control.Range.Text = element.Variable_datepr;
+                                        break;
+                                    case DataFields.variable_year1:
+                                        control.Range.Text = element.Variable_year1;
+                                        break;
+                                    default:
+
+                                        break;
+                                }
+                            }
+                            // oWord.Selection.Range.ContentControls    Item(DataFields.variable_bt);
+
+                            //  Debug.WriteLine(item.SetPlaceholderText); 
+
+                            oDoc.SaveAs(FileName: resultpath + "\\прибор_SN_" + element.Variable_sn + "_" + DateTime.Now.ToString("dd.MM.yyyyTHH-mm-ss") + ".docx");   //Путь к заполненному шаблону
+                            iCount++;
+                        }
+
+
+                    }
+                    MessageBox.Show("Выполнено! "+ iCount + " файлов создано!");
+                    btnFillTemplate.Enabled = false;
+                    btnLoadData.Enabled = true;
+
+                    lblDataElement.Text = "Загружено объектов:";
+                    lblResult.Text = "Путь к результату:";
+                    lblTemplate.Text = "Выбран шаблон:";
+                    lblResultData.Text = "Заполнено шаблонов:";
+                }
+            }
+            catch (Exception theException)
+            {
+                MessageBox.Show(theException.Message);
+            }
+            finally
+            {
+                if (oDoc != null)
+                    oDoc.Close();
+            } 
 
         }
-    }
-
-
+    } 
 
 }
 
