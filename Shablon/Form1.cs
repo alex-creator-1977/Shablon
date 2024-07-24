@@ -1,21 +1,14 @@
-﻿using Aspose.Words;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Windows.Forms;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Shablon
 {
 
-
-
     public partial class Form1 : Form
     {
-        const string Nr = "nr";
-        const string Variable_bt = "variable_bt";
-        const string Variable_sn = "variable_sn";
-        const string Variable_year2 = "variable_year2";
-        const string Variable_fio = "variable_fio";
-        const string Variable_datepr = "variable_datepr";
-        const string Variable_year1 = "variable_year1";
+        string? resultpath = null;
+        string? templatepath = null;
 
         Excel.Application objApp;
         Excel._Workbook objBook;
@@ -77,24 +70,94 @@ namespace Shablon
                     iRows = saRet.GetUpperBound(0);
                     iCols = saRet.GetUpperBound(1);
 
-                     
- 
-                  
+                    DataElement? Element = null;
 
                     for (long rowCounter = 1; rowCounter <= iRows; rowCounter++)
                     {
-                       
+                        if (rowCounter > 1)
+                            Element = new DataElement();
+
                         for (long colCounter = 1; colCounter <= iCols; colCounter++)
                         {
-                                var   valueString = saRet[rowCounter, 1];
-                            //Write the next value into the string.
-                            valueString = String.Concat(valueString, saRet[rowCounter, colCounter].ToString() + ", ");
+                            var DataFiled = saRet[1, colCounter];
 
+                            if (rowCounter > 1)
+                            {
+                                //Write the next value into the string.
+                                var objFieldvalue = saRet[rowCounter, colCounter];
+
+                                if (objFieldvalue != null && DataFiled != null)
+
+                                {
+                                    string fieldvalue = objFieldvalue.ToString().Trim();
+
+
+                                    switch (DataFiled.ToString().Trim())
+                                    {
+                                        case DataFields.nr:
+                                            Element.Nr = fieldvalue;
+                                            break;
+                                        case DataFields.variable_bt:
+                                            Element.Variable_bt = "нет";
+                                            if (fieldvalue == "+")
+                                                Element.Variable_bt = "есть";
+                                            break;
+                                        case DataFields.variable_sn:
+                                            Element.Variable_sn = fieldvalue;
+                                            break;
+                                        case DataFields.variable_year2:
+                                            Element.Variable_year2 = fieldvalue;
+                                            break;
+                                        case DataFields.variable_fio:
+                                            Element.Variable_fio = fieldvalue;
+                                            break;
+                                        case DataFields.variable_datepr:
+
+                                            string? dateString = null;
+
+                                            if (objFieldvalue is DateTime)
+                                            {
+                                                dateString = Convert.ToDateTime(fieldvalue).ToString("dd.MM.yyyy");
+
+                                            }
+                                            else
+                                            {
+                                                dateString = fieldvalue;
+                                            }
+
+                                            Element.Variable_datepr = dateString;
+
+
+                                            break;
+                                        case DataFields.variable_year1:
+                                            Element.Variable_year1 = fieldvalue;
+                                            break;
+                                        default:
+
+                                            break;
+                                    }
+                                }
+                            }
 
                         }
- 
+                        if (Element != null)
+                        {
+                            if (!String.IsNullOrEmpty(Element.Nr)
+                                && !String.IsNullOrEmpty(Element.Variable_bt)
+                                && !String.IsNullOrEmpty(Element.Variable_sn)
+                                && !String.IsNullOrEmpty(Element.Variable_year2)
+                                && !String.IsNullOrEmpty(Element.Variable_fio)
+                                && !String.IsNullOrEmpty(Element.Variable_datepr)
+                                && !String.IsNullOrEmpty(Element.Variable_year1))
+                            {
+                                DataList.Add(Element);
+                            }
+
+                        }
+
                     }
- 
+                    lblDataElement.Text = lblDataElement.Text + " " + DataList.Count;
+                    MessageBox.Show(lblDataElement.Text);
                 }
             }
 
@@ -133,19 +196,26 @@ namespace Shablon
             return filePath;
         }
 
+        //Выбрать папку для результа
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog1 = new FolderBrowserDialog();
 
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                resultpath = folderBrowserDialog1.SelectedPath;
+                lblResult.Text = resultpath;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            templatepath = GetFileFromDialog("word files (*.docx)|*.docx;");
+            lblTemplate.Text = lblTemplate.Text + " " + templatepath;
+        }
     }
 
-    internal class DataElement
-    {
-        public required string Nr { get; set; }
-        public required bool Variable_bt { get; set; }
-        public required string Variable_sn { get; set; }
-        public required string Variable_year2 { get; set; }
-        public required string Variable_fio { get; set; }
-        public required string Variable_datepr { get; set; }
-        public required string Variable_year1 { get; set; }
-
-    }
+    
+    
 }
 
